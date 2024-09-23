@@ -4,21 +4,13 @@ import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 const Mapcomp = ({ setDrploc, drploc }) => {
-  let gloc = true;
-
-  if (drploc) {
-    gloc = true;
-  }
-
   useEffect(() => {
-    console.log(drploc);
-
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const { latitude, longitude } = pos.coords;
           const cor = { lat: latitude, lng: longitude };
-          if (drploc?.lat) {
+          if (drploc.lat) {
           } else {
             setDrploc(cor);
           }
@@ -55,7 +47,7 @@ const Mapcomp = ({ setDrploc, drploc }) => {
       }}
     >
       <MapContainer
-        center={drploc || [22.5743545, 88.3628734]}
+        center={drploc.lat ? drploc : { lat: 22.5743545, lng: 88.3628734 }}
         zoom={14}
         scrollWheelZoom={true}
       >
@@ -63,7 +55,7 @@ const Mapcomp = ({ setDrploc, drploc }) => {
           attribution=""
           url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {gloc && <GetLoc />}
+        {drploc && <GetLoc />}
       </MapContainer>
     </motion.div>
   );

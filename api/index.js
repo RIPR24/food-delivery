@@ -41,7 +41,7 @@ const expser = app.listen(PORT, () => {
 
 const socket = new Server(expser, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "*",
   },
 });
 
@@ -299,6 +299,11 @@ app.post("/user/signup", async (req, res) => {
   } catch (error) {
     res.json({ status: "failed", err: error });
   }
+});
+
+app.get("/users", async (req, res) => {
+  const users = await Usermodel.find({});
+  res.json(users);
 });
 
 //Cuser
