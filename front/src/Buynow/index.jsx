@@ -27,6 +27,7 @@ const Buynow = () => {
     socket.emit("place-order", {
       userid: user._id,
       usid: socket.id,
+      name: user.name,
       status: 0,
       timeStamp: [new Date().toLocaleString()],
       cart,

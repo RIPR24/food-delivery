@@ -5,7 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Login = () => {
-  const { socket, apiUrl, setSocket, setCuser, cuser } = useContext(DelContext);
+  const { apiUrl, setSocket, setCuser, cuser, setRestpick, setDelarr } =
+    useContext(DelContext);
   const navigate = useNavigate();
   const [prob, setProb] = useState("");
   const [load, setLoad] = useState(true);
@@ -23,7 +24,10 @@ const Login = () => {
       const soc = io(apiUrl);
       setSocket(soc);
       soc.emit("del-login", { delid: data.user._id });
-
+      soc.on("picked-orders", (obj) => {
+        setRestpick(obj.filter((el) => el.status < 2));
+        setDelarr(obj.filter((el) => el.status === 2));
+      });
       if (ret) {
         return data.status;
       } else {
@@ -31,6 +35,9 @@ const Login = () => {
       }
     } else {
       setProb(data.status);
+      if (load) {
+        setLoad(false);
+      }
     }
   };
 
@@ -57,6 +64,8 @@ const Login = () => {
       if (datal) {
         const dat = JSON.parse(datal);
         loginUser(dat.username, dat.password, false);
+      } else {
+        setLoad(false);
       }
     }
   }, []);

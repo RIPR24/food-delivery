@@ -6,7 +6,7 @@ import Mapcomp from "./Mapcomp";
 import { NavLink } from "react-router-dom";
 
 const LogPop = () => {
-  const { logp, setLogp, user, setUser, apiUrl, loginUser, socket } =
+  const { logp, setLogp, user, setUser, apiUrl, loginUser, socket, setPop } =
     useContext(FDfrontContext);
   const [signup, setSignup] = useState(false);
   const [drploc, setDrploc] = useState(user?.defloc?.coor || {});
@@ -17,17 +17,30 @@ const LogPop = () => {
     const mono = document.getElementById("mono").value;
     const password = document.getElementById("pass").value;
 
-    const status = loginUser(mono, password);
+    const status = await loginUser(mono, password);
     if (status === "success") {
       localStorage.setItem("user-cred", JSON.stringify({ mono, password }));
     }
   };
 
+  const logout = async () => {
+    setUser({});
+    localStorage.setItem(
+      "user-cred",
+      JSON.stringify({ mono: "", password: "" })
+    );
+    setLogp(false);
+  };
+
   const modifyLoc = () => {
-    socket.emit("user-change-loc", {
-      uid: user._id,
-      defloc: { name: changeloc, coor: drploc },
-    });
+    if (drploc.lat) {
+      socket.emit("user-change-loc", {
+        uid: user._id,
+        defloc: { name: changeloc, coor: drploc },
+      });
+    } else {
+      setPop({ stat: true, msg: "Select Coordinate" });
+    }
   };
 
   const signUser = async () => {
@@ -53,7 +66,10 @@ const LogPop = () => {
       });
       const data = await res.json();
       if (data.status === "success") {
-        setUser(data.user);
+        const status = await loginUser(mono, password);
+        if (status === "success") {
+          localStorage.setItem("user-cred", JSON.stringify({ mono, password }));
+        }
       }
     } else {
       alert("Enter correct data");
@@ -140,9 +156,18 @@ const LogPop = () => {
               </button>
             </div>
             <button onClick={modifyLoc}>SAVE LOCATION</button>
-            <NavLink to={"/orders"}>
-              <button>ORDERS</button>
-            </NavLink>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <NavLink to={"/orders"}>
+                <button>ORDERS</button>
+              </NavLink>
+              <button onClick={logout}>LOGOUT</button>
+            </div>
           </motion.div>
         </div>
       ) : (

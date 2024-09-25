@@ -4,6 +4,8 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
+import Restpck from "./Restpck";
+import Droploc from "./Droploc";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +19,14 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/restpck",
+        element: <Restpck />,
+      },
+      {
+        path: "/droploc",
+        element: <Droploc />,
       },
     ],
   },

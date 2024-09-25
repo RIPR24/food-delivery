@@ -15,12 +15,13 @@ const Popup = ({ msg, setPop }) => {
       exit={{ scale: 0 }}
       style={{
         position: "fixed",
-        top: 10,
+        top: 90,
         right: 10,
         width: 300,
         borderRadius: 10,
         backgroundColor: "#e4e4e4",
         padding: 20,
+        border: "1px solid #555555",
       }}
     >
       {msg}

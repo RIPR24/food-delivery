@@ -107,11 +107,25 @@ socket.on("connection", (soc) => {
         order.save();
       });
     }
+    socket.to(soc.id).emit("picked-orders", orders);
   });
 
   soc.on("get-orders", async (obj) => {
     const ordrs = await Ordermodel.find({ deluid: "" });
     socket.to(soc.id).emit("unpicked-orders", ordrs);
+  });
+
+  soc.on("del-order-select", async (obj) => {
+    const order = await Ordermodel.findById(obj.oid);
+    order.deluid = obj.delid;
+    order.dsid = soc.id;
+    order.save();
+    const ordrs = await Ordermodel.find({ deluid: "" });
+    socket.emit("unpicked-orders", ordrs);
+  });
+
+  soc.on("del-cur-loc", (obj) => {
+    socket.to(obj.delid).emit("del-liv-loc", obj.coor);
   });
 });
 
