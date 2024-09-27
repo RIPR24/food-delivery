@@ -29,7 +29,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [upd, setUpd] = useState(true);
   const [pop, setPop] = useState({ stat: false, msg: "" });
-  const apiUrl = "http://localhost:4000/";
+  const apiUrl = "https://food-delivery-api-uael.onrender.com/";
 
   const getdata = async () => {
     const res = await fetch(apiUrl + "rtype");

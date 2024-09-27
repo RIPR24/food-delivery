@@ -10,7 +10,7 @@ const App = () => {
   const [restpick, setRestpick] = useState([]);
   const [delarr, setDelarr] = useState([]);
   const [allunpickedorders, setAllunpickedorders] = useState([]);
-  const apiUrl = "http://localhost:4000/";
+  const apiUrl = "https://food-delivery-api-uael.onrender.com/";
   const [pos, setPos] = useState({});
   const [refresh, setRefresh] = useState(false);
 

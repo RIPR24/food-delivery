@@ -15,7 +15,7 @@ function App() {
   const [restfilter, setRestfilter] = useState({});
   const [isloaded, setIsloaded] = useState(false);
   const [rtypes, setRtypes] = useState([]);
-  const apiUrl = "http://localhost:4000/";
+  const apiUrl = "https://food-delivery-api-uael.onrender.com/";
   const [dataarr, setDataarr] = useState([]);
   const [socket, setSocket] = useState();
   const [pop, setPop] = useState({ stat: false, msg: "" });
