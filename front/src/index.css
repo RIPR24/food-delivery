@@ -65,9 +65,9 @@ a {
 
 .rest-menu {
   display: grid;
-  grid-template-columns: 300px 600px;
+  grid-template-columns: 35% 65%;
   margin-top: 20px;
-  gap: 50px;
+  gap: 3vw;
 }
 
 .menu-a {
@@ -257,4 +257,34 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 0.8rem;
   font-weight: 500;
   padding: 5px;
+  cursor: pointer;
+}
+
+.restarr-con {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.menu-b {
+  padding: 15px 15px;
+}
+
+@media (max-width: 600px) {
+  .restarr-con {
+    grid-template-columns: 1fr;
+  }
+
+  .rest-menu {
+    grid-template-columns: 30% 70%;
+    gap: 20;
+  }
+
+  .menu-a {
+    padding: 0 5px;
+  }
+
+  .menu-b {
+    padding: 15px 5px;
+  }
 }

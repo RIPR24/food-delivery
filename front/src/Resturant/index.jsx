@@ -152,11 +152,11 @@ const Rest = () => {
                       }
                       return (
                         <div
+                          className="menu-b"
                           key={d.name}
                           style={{
                             position: "relative",
                             display: "flex",
-                            padding: 15,
                           }}
                         >
                           <img
@@ -166,7 +166,7 @@ const Rest = () => {
                               height: 100,
                               width: 100,
                               borderRadius: 10,
-                              marginRight: 30,
+                              marginRight: 20,
                               objectFit: "cover",
                             }}
                             alt=""

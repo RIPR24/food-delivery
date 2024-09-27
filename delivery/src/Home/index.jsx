@@ -7,14 +7,8 @@ import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
 const Home = () => {
-  const {
-    cuser,
-    socket,
-    allunpickedorders,
-    setAllunpickedorders,
-    restpick,
-    setRestpick,
-  } = useContext(DelContext);
+  const { cuser, socket, allunpickedorders, setAllunpickedorders } =
+    useContext(DelContext);
   const navigate = useNavigate();
   const [fillteredorders, setFilteredorders] = useState(allunpickedorders);
   const [temp, setTemp] = useState({});
@@ -37,8 +31,9 @@ const Home = () => {
 
   const acceptDelivery = () => {
     socket.emit("del-order-select", { oid: temp._id, delid: cuser._id });
-    setRestpick([...restpick, temp]);
+    setRefresh(true);
     setTemp({});
+    navigate("/restpck");
   };
 
   return (

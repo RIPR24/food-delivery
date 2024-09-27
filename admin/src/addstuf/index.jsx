@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import Addrtype from "./Addrtype";
 import "./add.css";
 import Restsel from "./Restsel";
+import { useNavigate } from "react-router-dom";
+import { AdminContext } from "../App";
 
 const Add = () => {
   const [rest, setRest] = useState(true);
+  const navigate = useNavigate();
+  const { cuser } = useContext(AdminContext);
+
+  useEffect(() => {
+    if (cuser._id) {
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div

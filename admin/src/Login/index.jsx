@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { DelContext } from "../App";
-import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { AdminContext } from "../App";
 
 const Login = () => {
-  const { apiUrl, setSocket, setCuser, cuser, setRestpick, setDelarr } =
-    useContext(DelContext);
+  const { apiUrl, setCuser, cuser } = useContext(AdminContext);
   const navigate = useNavigate();
   const [prob, setProb] = useState("");
-  const [load, setLoad] = useState(true);
+  const [load, setLoad] = useState(false);
 
   const loginUser = async (username, password, ret) => {
     const res = await fetch(apiUrl + "cuser/login", {
@@ -18,18 +16,11 @@ const Login = () => {
       body: JSON.stringify({ username, password }),
     });
     const data = await res.json();
-    if (data.status === "success" && data.user.role === "del") {
+    if (data.status === "success") {
       setProb("");
       setCuser(data.user);
-      const soc = io(apiUrl);
-      setSocket(soc);
-      soc.emit("del-login", { delid: data.user._id });
-      soc.on("picked-orders", (obj) => {
-        setRestpick(obj.filter((el) => el.status < 2));
-        setDelarr(obj.filter((el) => el.status === 2));
-      });
       if (ret) {
-        return data.status;
+        return data;
       } else {
         navigate("/home");
       }
@@ -46,29 +37,28 @@ const Login = () => {
     const password = document.getElementById("password").value;
 
     const status = await loginUser(username, password, true);
-    console.log(status);
-
-    if (status === "success") {
+    if (status.status === "success" && status.user.role !== "del") {
       localStorage.setItem(
-        "cuser-del-cred",
+        "cuser-admin-cred",
         JSON.stringify({ username, password })
       );
       navigate("/home");
     }
   };
 
-  useEffect(() => {
-    if (cuser._id) {
-    } else {
-      const datal = localStorage.getItem("cuser-del-cred");
-      if (datal) {
-        const dat = JSON.parse(datal);
-        loginUser(dat.username, dat.password, false);
-      } else {
-        setLoad(false);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (cuser._id) {
+  //     navigate("/home");
+  //   } else {
+  //     const datal = localStorage.getItem("cuser-admin-cred");
+  //     if (datal) {
+  //       const dat = JSON.parse(datal);
+  //       loginUser(dat.username, dat.password, false);
+  //     } else {
+  //       setLoad(false);
+  //     }
+  //   }
+  // }, []);
 
   return (
     <div

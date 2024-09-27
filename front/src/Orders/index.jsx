@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { FDfrontContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
-  const { socket, user, apiUrl } = useContext(FDfrontContext);
+  const { socket, user, apiUrl, setTrkel } = useContext(FDfrontContext);
   const [orderarr, setOrderarr] = useState([]);
+  const navigate = useNavigate();
 
   const getStatus = (stat) => {
     if (stat === 0) {
@@ -26,11 +28,14 @@ const Orders = () => {
   useEffect(() => {
     socket.emit("get-user-orders", { uid: user._id, usid: socket.id });
     socket.on("user-orders-res", (arr) => {
-      console.log(arr);
-
-      setOrderarr(arr);
+      setOrderarr(arr.reverse());
     });
   }, []);
+
+  const trkcl = (e) => {
+    setTrkel(orderarr[e.target.dataset.ind]);
+    navigate("/trkordr");
+  };
 
   return (
     <div
@@ -78,6 +83,15 @@ const Orders = () => {
               </p>
               <p style={{ color: status.col }}>{status.status}</p>
             </div>
+            <p
+              style={{
+                textAlign: "center",
+                fontSize: "1.2rem",
+                fontWeight: 500,
+              }}
+            >
+              {"₹" + el.totamo + "/-"}
+            </p>
             <div
               style={{
                 display: "flex",
@@ -85,7 +99,11 @@ const Orders = () => {
                 margin: 20,
               }}
             >
-              {el.status === 2 && <p className="trk">Track Order</p>}
+              {el.status === 2 && (
+                <p data-ind={i} onClick={trkcl} className="trk">
+                  Track Order
+                </p>
+              )}
               {el.status < 3 && <p className="cncl">Cancel Order</p>}
             </div>
           </div>

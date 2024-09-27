@@ -60,9 +60,7 @@ const RestArr = () => {
   };
 
   return (
-    <div
-      style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}
-    >
+    <div className="restarr-con">
       {arr.map((el, i) => {
         let types = "";
         const count = el.types.length;

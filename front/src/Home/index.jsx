@@ -61,6 +61,7 @@ const Home = () => {
                     src={el.img}
                     alt=""
                     data-ind={el.name}
+                    loading="lazy"
                     style={{
                       height: 130,
                       width: 130,

@@ -12,6 +12,7 @@ const App = () => {
   const [allunpickedorders, setAllunpickedorders] = useState([]);
   const apiUrl = "http://localhost:4000/";
   const [pos, setPos] = useState({});
+  const [refresh, setRefresh] = useState(false);
 
   const getCurpos = () => {
     if (navigator.geolocation) {
@@ -39,6 +40,18 @@ const App = () => {
     }
   }, [socket]);
 
+  useEffect(() => {
+    if (socket) {
+      if (refresh) {
+        socket.emit("del-refresh", { delid: cuser._id });
+      }
+      socket.on("del-ref-res", (obj) => {
+        setRestpick(obj.filter((el) => el.status < 2));
+        setDelarr(obj.filter((el) => el.status === 2));
+      });
+    }
+  }, [refresh]);
+
   return (
     <DelContext.Provider
       value={{
@@ -55,9 +68,10 @@ const App = () => {
         setDelarr,
         pos,
         setPos,
+        setRefresh,
       }}
     >
-      <div>
+      <div style={{ display: "flex" }}>
         {cuser._id && <Nav />}
         <Outlet />
         <ScrollRestoration />

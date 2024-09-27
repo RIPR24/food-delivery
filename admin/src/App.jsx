@@ -25,7 +25,7 @@ const dummy2 = {
 export const AdminContext = createContext();
 
 function App() {
-  const [cuser, setCuser] = useState(dummy1);
+  const [cuser, setCuser] = useState({});
   const [items, setItems] = useState([]);
   const [upd, setUpd] = useState(true);
   const [pop, setPop] = useState({ stat: false, msg: "" });
@@ -48,7 +48,15 @@ function App() {
 
   return (
     <AdminContext.Provider
-      value={{ cuser, setCuser, items, apiUrl, setUpd, upd, setPop }}
+      value={{
+        cuser,
+        setCuser,
+        items,
+        apiUrl,
+        setUpd,
+        upd,
+        setPop,
+      }}
     >
       <div style={{ display: "flex" }}>
         <Nav />

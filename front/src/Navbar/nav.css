@@ -6,7 +6,7 @@
   left: 0;
   display: flex;
   align-items: center;
-  padding: 0 80px;
+  padding: 0 2vw;
   justify-content: space-between;
   border-bottom: 1px solid rgb(230, 230, 230);
   z-index: 1;
@@ -45,7 +45,8 @@
 .srchinp {
   border: none;
   background-color: transparent;
-  width: 350px;
+  width: 90%;
+  max-width: 350px;
   font-size: 1.2rem;
 }
 

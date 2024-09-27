@@ -9,6 +9,7 @@ export const FDfrontContext = createContext();
 function App() {
   const [user, setUser] = useState({});
   const [cart, setCart] = useState({});
+  const [trkel, setTrkel] = useState({});
   const [logp, setLogp] = useState(false);
   const [opnrest, setOpnrest] = useState([]);
   const [restfilter, setRestfilter] = useState({});
@@ -102,6 +103,8 @@ function App() {
           loginUser,
           socket,
           setPop,
+          trkel,
+          setTrkel,
         }}
       >
         {isloaded && <Nav />}

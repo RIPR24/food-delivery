@@ -31,7 +31,7 @@ const DrpMap = ({ arr }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       style={{
-        height: "80vh",
+        height: "100%",
         width: "100%",
       }}
     >
@@ -46,11 +46,11 @@ const DrpMap = ({ arr }) => {
         />
         {pos.lat && <Marker position={pos} icon={navIcon}></Marker>}
         {arr.length > 0 &&
-          arr.map((el) => {
+          arr.map((el, i) => {
             return (
               <Marker
                 position={el.location.coor}
-                key={el.name}
+                key={i}
                 icon={el.type === "rest" ? burgIcon : homIcon}
               >
                 <Popup>{el.name}</Popup>

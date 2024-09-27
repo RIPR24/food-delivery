@@ -24,12 +24,13 @@ const Buynow = () => {
   };
 
   const handleClick = () => {
+    const date = new Date().toString();
     socket.emit("place-order", {
       userid: user._id,
       usid: socket.id,
       name: user.name,
-      status: 0,
-      timeStamp: [new Date().toLocaleString()],
+      status: cart.rest.sid === "" ? 1 : 0,
+      timeStamp: cart.rest.sid === "" ? [date, date] : [date],
       cart,
       location: user.defloc,
       totamo,

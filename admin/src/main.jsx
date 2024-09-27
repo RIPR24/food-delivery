@@ -6,6 +6,7 @@ import "./index.css";
 import Orders from "./Orders";
 import Home from "./home";
 import Add from "./addstuf";
+import Login from "./Login";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,9 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <Login />,
+      },
+      {
         path: "/home",
         element: <Home />,
       },

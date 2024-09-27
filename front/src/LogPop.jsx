@@ -163,7 +163,12 @@ const LogPop = () => {
                 justifyContent: "space-evenly",
               }}
             >
-              <NavLink to={"/orders"}>
+              <NavLink
+                onClick={() => {
+                  setLogp(false);
+                }}
+                to={"/orders"}
+              >
                 <button>ORDERS</button>
               </NavLink>
               <button onClick={logout}>LOGOUT</button>

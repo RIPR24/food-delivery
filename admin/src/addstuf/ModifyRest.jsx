@@ -11,8 +11,11 @@ const ModifyRest = ({ setAdd }) => {
   const [drploc, setDrploc] = useState({});
   const [getloc, setGetloc] = useState(false);
   const [item, setItem] = useState({});
+  const [restinp, setRestinp] = useState("");
+  const [restarr, setRestarr] = useState([]);
   const { apiUrl, setPop, cuser } = useContext(AdminContext);
   let role = cuser?.role !== "admin";
+  const [allrest, setAllrest] = useState([]);
 
   const getRest = async (id) => {
     try {
@@ -24,7 +27,6 @@ const ModifyRest = ({ setAdd }) => {
       const data = await res.json();
       if (data.status === "success") {
         setRest(data.rest);
-        console.log(data);
       } else {
         console.log(data);
       }
@@ -33,9 +35,39 @@ const ModifyRest = ({ setAdd }) => {
     }
   };
 
+  const getAllRest = async () => {
+    try {
+      const res = await fetch(apiUrl + "rest");
+      const data = await res.json();
+      if (data.status === "success") {
+        setAllrest(data.rest);
+      } else {
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const openRest = async () => {
+    if (rest._id) {
+      const res = await fetch(apiUrl + "rest/open", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ _id: rest._id }),
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        setPop({ stat: true, msg: " Dummy created" });
+      }
+    }
+  };
+
   useEffect(() => {
     if (role) {
       getRest(cuser.detid);
+    } else {
+      getAllRest();
     }
   }, []);
 
@@ -123,9 +155,76 @@ const ModifyRest = ({ setAdd }) => {
     }
   };
 
+  const handleChange = (e) => {
+    const val = e.target.value;
+    setRestinp(val);
+    if (val.length > 0) {
+      let copy = allrest.filter((el) =>
+        el.name.toLowerCase().includes(val.toLowerCase())
+      );
+      setRestarr(copy);
+    } else {
+      setRestarr([]);
+    }
+  };
+
+  const handleClick = (e) => {
+    const val = e.target.dataset.ind;
+    setRest(restarr[val]);
+    setRestinp(restarr[val].name);
+    setRestarr([]);
+  };
+
   return (
     <>
       <h1 style={{ margin: "30px", textAlign: "center" }}>MODIFY RESTURANT</h1>
+      {!role && (
+        <div
+          style={{
+            position: "relative",
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            gap: 20,
+            justifyContent: "center",
+            alignItems: "center",
+            margin: "50px 0",
+          }}
+        >
+          <input
+            type="text"
+            value={restinp}
+            onChange={handleChange}
+            placeholder="Select resturant"
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: 35,
+              left: "45%",
+              translate: "-40% 0",
+            }}
+          >
+            {restarr.map((el, i) => {
+              return (
+                <p
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: "#151515",
+                    padding: "2px 15px",
+                  }}
+                  key={i}
+                  data-ind={i}
+                  onClick={handleClick}
+                >
+                  {el.name}
+                </p>
+              );
+            })}
+          </div>
+          <button onClick={openRest}>SET DUMMY</button>
+        </div>
+      )}
       <div
         style={{
           display: "grid",
@@ -279,7 +378,7 @@ const ModifyRest = ({ setAdd }) => {
           setItem={setItem}
         />
         <Menulist menu={menu} setMenu={setMenu} setItem={setItem} />
-        <button onClick={addrest}>SAVE</button>
+        {rest._id && <button onClick={addrest}>SAVE</button>}
       </div>
       {!role && (
         <button

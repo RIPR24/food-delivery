@@ -7,9 +7,6 @@
   box-sizing: border-box;
 }
 
-#root {
-}
-
 body {
   background-color: #242424;
   color: aliceblue;
@@ -75,12 +72,14 @@ label {
 
 .home-con {
   width: 90%;
+  height: 80vh;
   max-width: 950px;
   padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   position: relative;
+  overflow-y: auto;
 }
 
 .ordrel {
@@ -100,4 +99,34 @@ a {
 
 .active {
   color: aqua;
+}
+
+.float-nav {
+  display: none;
+}
+
+.fixed-nav {
+  width: 280px;
+}
+
+.order-con {
+  background-color: white;
+  border-radius: 20px;
+  filter: drop-shadow(0 0 5px #ccc);
+  padding: 20px;
+  color: #151515;
+}
+
+@media (max-width: 600px) {
+  .float-nav {
+    display: block;
+  }
+
+  .fixed-nav {
+    display: none;
+  }
+
+  .home-con {
+    grid-template-columns: 1fr;
+  }
 }

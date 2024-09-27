@@ -1,31 +1,45 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 
-const Sidebar = () => {
+const Sidebar = ({ setExpand }) => {
+  const handleClick = () => {
+    if (setExpand) {
+      setExpand(false);
+    }
+  };
+
   return (
-    <div
+    <motion.div
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      exit={{ scale: 0 }}
       style={{
         display: "flex",
-        position: "fixed",
-        top: 0,
-        left: 0,
         flexDirection: "column",
         height: "100vh",
-        width: "90%",
+        width: "100%",
         maxWidth: 300,
         backgroundColor: "#151515",
-        borderRadius: 20,
+        borderRadius: 5,
         justifyContent: "space-evenly",
         alignItems: "center",
-        zIndex: 1,
+        transformOrigin: "left top",
+        zIndex: 2,
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <NavLink to={"/home"}>Home</NavLink>
-        <NavLink to={"/restpck"}>Reasturant Pickup</NavLink>
-        <NavLink to={"/droploc"}>Drop Location</NavLink>
+        <NavLink onClick={handleClick} to={"/home"}>
+          Home
+        </NavLink>
+        <NavLink onClick={handleClick} to={"/restpck"}>
+          Reasturant Pickup
+        </NavLink>
+        <NavLink onClick={handleClick} to={"/droploc"}>
+          Drop Location
+        </NavLink>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

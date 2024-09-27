@@ -11,7 +11,8 @@
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   background-color: #151515;
   color: aliceblue;
   font-size: 1.3rem;
@@ -80,4 +81,12 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .active {
   color: aquamarine;
+}
+
+.ordrel {
+  background-color: #4d4c4c;
+  border-radius: 20px;
+  padding: 20px;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
