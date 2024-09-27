@@ -24,7 +24,7 @@ const Add = () => {
         flexDirection: "column",
         marginLeft: 150,
         width: "100%",
-        height: "100px",
+        height: 100,
       }}
     >
       <div
