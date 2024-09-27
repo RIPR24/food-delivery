@@ -1,10 +1,9 @@
-import { useEffect, useContext } from "react";
-import "./add.css";
-import Restsel from "./Restsel";
 import { useNavigate } from "react-router-dom";
 import { AdminContext } from "../App";
+import Addrtype from "./Addrtype";
+import { useContext, useEffect } from "react";
 
-const Add = () => {
+const Foodtypes = () => {
   const navigate = useNavigate();
   const { cuser } = useContext(AdminContext);
 
@@ -25,8 +24,9 @@ const Add = () => {
         height: 100,
       }}
     >
-      <Restsel />
+      <Addrtype />
     </div>
   );
 };
-export default Add;
+
+export default Foodtypes;

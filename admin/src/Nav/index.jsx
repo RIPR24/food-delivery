@@ -21,7 +21,10 @@ const Nav = () => {
           ORDERS
         </NavLink>
         <NavLink className="nav-el" to={"/addstuff"}>
-          ADD ITEMS
+          RESTURANT
+        </NavLink>
+        <NavLink className="nav-el" to={"/foodtype"}>
+          FOOD ITEMS
         </NavLink>
       </div>
     </div>
