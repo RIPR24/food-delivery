@@ -12,7 +12,11 @@ const Home = () => {
       navigate("/");
     }
   }, []);
-  return <div>Home</div>;
+  return (
+    <div style={{ fontSize: "5rem", marginLeft: 220 }}>
+      DASHBOARD IS UNDER PROGRESS
+    </div>
+  );
 };
 
 export default Home;
