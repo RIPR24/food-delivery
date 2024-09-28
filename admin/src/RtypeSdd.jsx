@@ -28,6 +28,7 @@ const RtypeSdd = ({ setItem, setAdd, setRname }) => {
         if (arr.length > 0) {
           setItem(arr[poi]);
           setRtype(arr[poi].name);
+          document.getElementById("rtypeimg").value = arr[poi].img;
           setPoi(0);
           setArr([]);
           setAdd(false);
@@ -39,6 +40,7 @@ const RtypeSdd = ({ setItem, setAdd, setRname }) => {
         if (arr.length > 0) {
           setItem(arr[poi]);
           setRtype(arr[poi].name);
+          document.getElementById("rtypeimg").value = arr[poi].img;
           setPoi(0);
           setArr([]);
           setAdd(false);
@@ -56,6 +58,7 @@ const RtypeSdd = ({ setItem, setAdd, setRname }) => {
     if (arr.length > 0) {
       if (arr[0].name.toLowerCase() === val.toLowerCase()) {
         setItem(arr[0]);
+        document.getElementById("rtypeimg").value = arr[0].img;
         setPoi(0);
         setArr([]);
         setAdd(false);
@@ -79,6 +82,7 @@ const RtypeSdd = ({ setItem, setAdd, setRname }) => {
     const i = +e.target.dataset.ind;
     setItem(arr[i]);
     setRtype(arr[i].name);
+    document.getElementById("rtypeimg").value = arr[i].img;
     if (setRname) {
       setRname(arr[poi].name);
     }
