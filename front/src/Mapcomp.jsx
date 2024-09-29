@@ -2,6 +2,13 @@ import { MapContainer, Marker, TileLayer, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import L from "leaflet";
+import pls from "./assets/placeholder.svg";
+
+const plsIcon = new L.Icon({
+  iconUrl: pls,
+  iconSize: [28, 28],
+});
 
 const Mapcomp = ({ setDrploc, drploc }) => {
   useEffect(() => {
@@ -31,7 +38,7 @@ const Mapcomp = ({ setDrploc, drploc }) => {
     });
 
     if (drploc?.lat) {
-      return <Marker position={drploc}></Marker>;
+      return <Marker position={drploc} icon={plsIcon}></Marker>;
     }
   }
 
