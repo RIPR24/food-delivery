@@ -11,10 +11,16 @@ import { AnimatePresence } from "framer-motion";
 import Cart from "./Cart";
 
 const Nav = () => {
-  const { cart, logp, setLogp, setRestfilter } = useContext(FDfrontContext);
+  const { cart, logp, setLogp, setRestfilter, user, setPop } =
+    useContext(FDfrontContext);
   const [cartpop, setCartpop] = useState(false);
   const cartClk = () => {
-    setCartpop(!cartpop);
+    if (user._id) {
+      setCartpop(!cartpop);
+    } else {
+      setPop({ stat: true, msg: "Login to continue!!" });
+      setLogp(true);
+    }
   };
   return (
     <>
