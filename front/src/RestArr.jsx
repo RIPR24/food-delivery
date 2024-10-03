@@ -44,6 +44,8 @@ const RestArr = () => {
         });
         setArr(copy);
       }
+    } else {
+      setArr(opnrest);
     }
   }, [restfilter]);
 

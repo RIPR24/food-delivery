@@ -97,7 +97,12 @@ const Addrtype = () => {
           Type :
         </label>
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <RtypeSdd setAdd={setAdd} setItem={setItem} setRname={setRname} />
+          <RtypeSdd
+            setAdd={setAdd}
+            setItem={setItem}
+            setRname={setRname}
+            imgurl={true}
+          />
           <input
             style={{ margin: "0 20px" }}
             type="text"

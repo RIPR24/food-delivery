@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AdminContext } from "./App";
 
-const RtypeSdd = ({ setItem, setAdd, setRname }) => {
+const RtypeSdd = ({ setItem, setAdd, setRname, imgurl }) => {
   const [arr, setArr] = useState([]);
   const [rtype, setRtype] = useState("");
   const [poi, setPoi] = useState(0);
@@ -82,12 +82,14 @@ const RtypeSdd = ({ setItem, setAdd, setRname }) => {
     const i = +e.target.dataset.ind;
     setItem(arr[i]);
     setRtype(arr[i].name);
-    document.getElementById("rtypeimg").value = arr[i].img;
+    if (imgurl) {
+      document.getElementById("rtypeimg").value = arr[i].img;
+    }
     if (setRname) {
       setRname(arr[poi].name);
     }
-    setPoi(0);
     setArr([]);
+    setPoi(0);
     setAdd(false);
   };
 
