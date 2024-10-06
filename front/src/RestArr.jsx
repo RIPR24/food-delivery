@@ -82,7 +82,13 @@ const RestArr = () => {
               <motion.img
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                style={{ width: "90%", borderRadius: 15, marginBottom: 10 }}
+                style={{
+                  width: "90%",
+                  borderRadius: 15,
+                  marginBottom: 10,
+                  height: 220,
+                  objectFit: "cover",
+                }}
                 src={`${apiUrl}${el.img}`}
                 loading="lazy"
                 alt=""
