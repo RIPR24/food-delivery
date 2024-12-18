@@ -15,7 +15,7 @@ const cuserrouter = require("./routes/cuserroute");
 const userrouter = require("./routes/userroute");
 const oderrouter = require("./routes/orderroute");
 
-const db = mongoose.connect(process.env.API_URI);
+mongoose.connect(process.env.API_URI);
 const PORT = process.env.PORT || 4000;
 
 let curws = [];
@@ -31,13 +31,13 @@ const expser = app.listen(PORT, () => {
   console.log("this runs");
 });
 
-const socket = new Server(expser, {
+const io = new Server(expser, {
   cors: {
     origin: "*",
   },
 });
 
-socket.on("connection", (soc) => {
+io.on("connection", (soc) => {
   soc.on("disconnect", async () => {
     const dis = curws.find((el) => el.sid === soc.id);
     if (dis) {
@@ -69,7 +69,7 @@ socket.on("connection", (soc) => {
         status: 0,
         "cart.rest._id": obj.rid,
       });
-      socket.to(obj.sid).emit("open-success", "success", ordrs);
+      io.to(obj.sid).emit("open-success", "success", ordrs);
     }
   });
 
@@ -90,18 +90,18 @@ socket.on("connection", (soc) => {
     //console.log(order);
     const rob = curws.find((el) => el.rid === obj.cart.rest._id);
     if (rob) {
-      socket.emit("new-order", obj);
+      io.emit("new-order", obj);
     }
 
-    socket.to(obj.usid).emit("order-placed-success", true);
+    io.to(obj.usid).emit("order-placed-success", true);
 
     const ordrs = await Ordermodel.find({ deluid: "" });
-    socket.emit("unpicked-orders", ordrs);
+    io.emit("unpicked-orders", ordrs);
   });
 
   soc.on("get-user-orders", async (obj) => {
     const orders = await Ordermodel.find({ userid: obj.uid });
-    socket.to(obj.usid).emit("user-orders-res", orders);
+    io.to(obj.usid).emit("user-orders-res", orders);
   });
 
   soc.on("del-login", async (obj) => {
@@ -116,12 +116,12 @@ socket.on("connection", (soc) => {
         order.save();
       });
     }
-    socket.to(soc.id).emit("picked-orders", orders);
+    io.to(soc.id).emit("picked-orders", orders);
   });
 
   soc.on("get-orders", async (obj) => {
     const ordrs = await Ordermodel.find({ deluid: "" });
-    socket.to(soc.id).emit("unpicked-orders", ordrs);
+    io.to(soc.id).emit("unpicked-orders", ordrs);
   });
 
   soc.on("del-order-select", async (obj) => {
@@ -130,12 +130,12 @@ socket.on("connection", (soc) => {
     order.dsid = soc.id;
     order.save();
     const ordrs = await Ordermodel.find({ deluid: "" });
-    socket.emit("unpicked-orders", ordrs);
+    io.emit("unpicked-orders", ordrs);
   });
 
   soc.on("del-cur-loc", (obj) => {
-    //socket.to(obj.delid).emit("del-liv-loc", obj.coor);
-    socket.emit(obj.delid, obj.coor);
+    //io.to(obj.delid).emit("del-liv-loc", obj.coor);
+    io.emit(obj.delid, obj.coor);
   });
 
   soc.on("del-refresh", async (obj) => {
@@ -143,7 +143,7 @@ socket.on("connection", (soc) => {
       .equals(obj.delid)
       .where("status")
       .lt("3");
-    socket.to(soc.id).emit("del-ref-res", orders);
+    io.to(soc.id).emit("del-ref-res", orders);
   });
 
   soc.on("del-ordr-pickup", async (obj) => {
@@ -154,9 +154,9 @@ socket.on("connection", (soc) => {
       ordr.timeStamp.push(date.toString());
       ordr.status = 2;
       ordr.save();
-      socket.to(soc.id).emit("del-pck-res", "success");
+      io.to(soc.id).emit("del-pck-res", "success");
     } else {
-      socket.to(soc.id).emit("del-pck-res", "failed");
+      io.to(soc.id).emit("del-pck-res", "failed");
     }
   });
 
@@ -168,9 +168,9 @@ socket.on("connection", (soc) => {
       ordr.timeStamp.push(date.toString());
       ordr.status = 3;
       ordr.save();
-      socket.to(soc.id).emit("del-delivered-res", "success");
+      io.to(soc.id).emit("del-delivered-res", "success");
     } else {
-      socket.to(soc.id).emit("del-delivered-res", "failed");
+      io.to(soc.id).emit("del-delivered-res", "failed");
     }
   });
 
@@ -182,9 +182,9 @@ socket.on("connection", (soc) => {
       ordr.timeStamp.push(date.toString());
       ordr.status = 1;
       ordr.save();
-      socket.to(soc.id).emit("order-pre-res", "success");
+      io.to(soc.id).emit("order-pre-res", "success");
     } else {
-      socket.to(soc.id).emit("order-pre-res", "failed");
+      io.to(soc.id).emit("order-pre-res", "failed");
     }
   });
 

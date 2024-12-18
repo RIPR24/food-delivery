@@ -1,4 +1,4 @@
-const Rtypemodel = require("./models/Rtypes");
+const Rtypemodel = require("../models/Rtypes");
 
 const rtypeCreate = async (req, res) => {
   const { name, dishes, img } = req.body;

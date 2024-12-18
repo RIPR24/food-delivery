@@ -1,4 +1,4 @@
-const Cusermodel = require("./models/Cusers");
+const Cusermodel = require("../models/Cusers");
 
 const cuserLogin = async (req, res) => {
   const { username, password } = req.body;

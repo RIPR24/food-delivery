@@ -1,4 +1,4 @@
-const Ordermodel = require("./models/Orders");
+const Ordermodel = require("../models/Orders");
 
 const orderPickup = async (req, res) => {
   const { cid, oid } = req.body;
