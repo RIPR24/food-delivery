@@ -21,7 +21,7 @@ function App() {
   const [pop, setPop] = useState({ stat: false, msg: "" });
 
   const getdet = async () => {
-    const res = await fetch(apiUrl + "openrest");
+    const res = await fetch(apiUrl + "rest/openrest");
     const data = await res.json();
     setOpnrest(data.rest);
 
