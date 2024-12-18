@@ -213,7 +213,7 @@ io.on("connection", (soc) => {
 
 //REST API
 
-app.use("/rtypes", rtyperouter);
+app.use("/rtype", rtyperouter);
 app.use("/rest", restrouter);
 app.use("/user", userrouter);
 app.use("/cuser", cuserrouter);

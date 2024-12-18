@@ -3,6 +3,7 @@ import Nav from "./Navbar";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 import io from "socket.io-client";
 import Popup from "./Popup";
+import Loading from "./Loading";
 
 export const FDfrontContext = createContext();
 
@@ -107,7 +108,7 @@ function App() {
           setTrkel,
         }}
       >
-        {isloaded && <Nav />}
+        {isloaded ? <Nav /> : <Loading />}
         {isloaded && <Outlet />}
         {pop.stat && <Popup msg={pop.msg} setPop={setPop} />}
         <ScrollRestoration />
